@@ -15,13 +15,25 @@ export class CrewComponent implements OnInit {
 
   memberBeingEdited: object = null;
 
+  duplicate: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
 
   add(memberName: string, isFirst: boolean) {
-    this.crew.push({name: memberName, firstMission: isFirst});
+    for (let i=0; i < this.crew.length; i++) {
+      if (this.crew[i]['name'] === memberName) {
+        this.duplicate = true;
+      }
+    }
+    if (!this.duplicate) {
+      this.crew.push({name: memberName, firstMission: isFirst});
+    } else {
+      window.alert('Cannot have duplicate entries!');
+      this.duplicate = false;
+    }
   }
 
   remove(member: object) {
