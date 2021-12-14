@@ -22,6 +22,7 @@ export class EquipmentComponent implements OnInit {
    maximumAllowedMass: number = 2000;
    maxItems: number = 10;
    color: string = 'yellow'
+   nearMassMax: boolean = false;
 
    constructor() { }
 
@@ -31,7 +32,7 @@ export class EquipmentComponent implements OnInit {
    addItem(item: object): boolean {
     this.cargoHold.push(item);
     this.cargoMass += item['mass'];
-    return this.cargoMass + 200 >= this.maximumAllowedMass;
+    return this.maximumAllowedMass - this.cargoMass < 200;
    }
 
    overBurdened(item: object): boolean {
@@ -39,7 +40,11 @@ export class EquipmentComponent implements OnInit {
       this.cargoMass + item['mass'] > this.maximumAllowedMass
    }
 
-
+   emptyHold(): void {
+     this.cargoHold = [];
+     this.cargoMass = 0;
+     this.nearMassMax = false;
+   }
 
    
 }
